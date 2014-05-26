@@ -1,64 +1,60 @@
+package insrt_sort;
+
 import java.util.Arrays;
 
-
-public class HighScore {
-
-	/**
-	 * @param args
-	 */
-	static int[] scores = {98,75,62,61,58, 40,39,10,0,0};
-	static int numOfScores=8;
+public class Scores {
 	
+	public static int [] scores = {98, 86, 75, 61, 55, 50, 40, 39, 0, 0};
+	public static int numOfScores = 8; 
+
 	public static void main(String[] args) {
-	    System.out.println("Score Position :" + add(11));
-	    System.out.println(Arrays.toString(scores));
-	 
-	    System.out.println(Arrays.toString(scores));
-	    System.out.println("Score Position :" + add(3));
-	    System.out.println("num of Scores: " + numOfScores);
-	    System.out.println(Arrays.toString(scores));
-	    System.out.println("Score Position :" + add(99));
-	    System.out.println("num of Scores: " + numOfScores);
-	    System.out.println(Arrays.toString(scores));
-	    System.out.println("Score Position :" + add(8));
-	    System.out.println("Score Position :" + add(56));
-	    System.out.println("Score Position :" + add(42));
-	    System.out.println("num of Scores: " + numOfScores);
+		
 		System.out.println(Arrays.toString(scores));
-		if (remove(62) == true)
-			System.out.println("found");
+		remove(75);
 		System.out.println(Arrays.toString(scores));
 	}
-    
+
 	public static int add(int newScore) {
-		if (numOfScores == scores.length && 
-				scores[scores.length-1]>newScore)
+		
+		if (numOfScores == scores.length && scores[scores.length - 1] > newScore)
 			return 0;
-		else  {
-			int i = numOfScores-1;
-		    for ( ; (i>=1) && scores[i-1]<newScore;i--) {	
-		    	scores[i] = scores[i-1];
-		    }
-		    scores[i] = newScore;
-		    if (numOfScores <scores.length) numOfScores++;
-		    return (i+1);
+		else {
+			int i = numOfScores - 1;
+			for ( ;(i >= 1) && scores[i - 1] < newScore; i--) {
+				scores[i] = scores[i-1];
+			}
+			scores[i] = newScore;
+			if (numOfScores < scores.length) numOfScores++;
+			return (i+1);
 		}
 	}
 	
-	public static boolean remove(int oldScore) {
+	public static boolean numberExists(int search_param) {
+		
 		boolean found = false;
-		int position = 0;
-		for (int y = 0; y < scores.length; y++) {
-			if (scores[y] == oldScore) {
+		for (int j = 0; j < scores.length; j++) {
+			if (scores[j] == search_param)
 				found = true;
-				position = y;
-			}
 		}
 		if (found == true)
-			
 			return true;
 		else
 			return false;
 	}
+	
+	public static int remove(int oldScore) {
+		boolean result = numberExists(oldScore);
+		int k = 0;
+		int position = 0;
+		if (result == false) {
+			System.out.println("Number does not exist");
+			return 0;
+		} else {
+			for ( ; k < numOfScores; k++) {
+				scores[k] = scores[k+1];
+				position = k;
+			}
+		}
+		return position;
+	}
 }
-
