@@ -18,6 +18,7 @@ public:
 	Text(); //  the default constructor  !!!  TO DO: An overloaded constructor
 	Text(char *s);
 	~Text();
+	~Text(char *s);
 };
 
 Text::Text()
