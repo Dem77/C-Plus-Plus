@@ -15,7 +15,8 @@ public:
 	void assign(char *);
 	int input();
 	void display();
-	Text();		//  the default constructor  !!!  TO DO: An overloaded constructor
+	Text(); //  the default constructor  !!!  TO DO: An overloaded constructor
+	Text(char *s);
 	~Text();
 };
 
@@ -23,6 +24,11 @@ Text::Text()
 {
 	s=NULL;
 }
+Text::Text(char *s)
+{
+	this->s=NULL;
+	assign(s);
+};
 Text::~Text()
 {
 	if (s)
@@ -60,6 +66,8 @@ int Text::input()
 int main()
 {
 	Text t;
+	Text u("Using the overloaded constructor");
+	u.display();
 	cout<<"Demo of Constructors - Destructors!\n\n" ;
 	cout << "1st pass\n";
 	t.display();
