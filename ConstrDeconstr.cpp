@@ -4,6 +4,7 @@
 *****************************/
 #include <iostream>
 #include <string>
+#include <cstdlib>
 using namespace std;
 
 #define _CRT_SECURE_NO_WARNINGS 
@@ -42,6 +43,17 @@ void Text::assign(char *s)
 	strcpy(this->s,s);
 }
 
+int Text::input()
+{
+	//char w[256];
+	//cin >> w;
+
+	string v;
+	getline(cin, v);
+	assign((char *)v.c_str());
+	return 0;
+};
+
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -53,6 +65,10 @@ int main()
 	t.display();
 	t.assign("Hello");
 	cout << "\n2nd pass\n";
+	t.display();
+	cout << "Enter a word: ";
+	t.input();
+	cout << "The word is: ";
 	t.display();
 	return 0;
 }
