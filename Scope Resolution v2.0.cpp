@@ -2,15 +2,18 @@
 * scoperes.cpp :  1st step into OOP                     *
 * Using the scope resolution operator with structures   *
 ********************************************************/
+#define _CRT_SECURE_NO_WARNINGS
 #include <string>
 #include <iostream>
 #include <cstdlib>
 using namespace std;
 
+#include "var.h"
+
 class Student {
+	char *_name;
 public:
 	long ID;
-	char name[40];
 	short credits;
 	Student();
 	Student(int, char *);
@@ -22,35 +25,48 @@ public:
 	} crs[8];
 	int add_new_course(char course[],int credits);
 	void display_info();
+	void name(char *s);
 } ;
 
-Student::Student()
+// Default constructor
+Student::Student ()
 {
  int i;
 	ID=0;
-	name[0]='\0';
+	_name=NULL;
 	credits=0;
 	for (i=0 ; i<8 ; i++)
 	{	crs[i].ID[0]='\0';
 		crs[i].credits=0;
 	}
 }
-
-Student::~Student() 
-{
-	cout << "Bye";
-}
-
-Student::Student(int _id, char * s)
-{
-	int i;
+// Overloaded constructor
+Student::Student(int _id,char *s)
+{ int i;
 	ID=_id;
-	strcpy(name,s);
-	credits = 0;
+	strcpy(_name,s);
+	credits=0;
 	for (i=0 ; i<8 ; i++)
 	{	crs[i].ID[0]='\0';
 		crs[i].credits=0;
 	}
+
+}
+
+Student::~Student()
+{  cout << "BYE\n" ;
+}
+void Student::name(char *s)
+{
+	if (s)
+		delete s;
+	_name=new char[strlen(s)]+1;
+	strcpy(_name,s);
+}
+
+void demo()
+{  Student x;
+	cout << "----\n";
 }
 
 
@@ -70,25 +86,27 @@ int Student::add_new_course(char course[],int credits)
 }
 
 void Student::display_info ()
-{	cout << "Student Name: " << name << "  Credits: " << credits << endl ;
+{	cout << "Student Name: " << _name << "  Credits: " << credits << endl ;
+
 }
 void Student::Courses::display_info ()
 {	cout << "\tCourse ID: " << ID << "  Credits: " << credits << endl ;
 }
 
 Student a;
-Student b(1234, "Alex Tripidis");
+Student b(1234,"Alfred Newman") ;
 
 void main()
-{  int i;
+{  int i(0);
    string w;
 	cout << "Lesson1:  Encapsulation - Scope Resolution"<< endl ;
-
+	demo();
 	cout <<"Enter Student name : " ; getline(cin,w);	
-	strcpy(a.name,w.c_str());
-	if (a.name[0]=='\0')  // if the name is empty
-		return;
+	a.name((char *) w.c_str());
+//	if (a._name[0]=='\0')  // if the name is empty
+//		return;
 	printf("Enter # of credits : " );	cin >>a.credits ; // scanf("%d", &a.credits );
+	demo();
 
 	a.add_new_course("CS 3397",2);
 	a.add_new_course("CS 2410",3);
