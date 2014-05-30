@@ -17,8 +17,8 @@ struct Courses {
 };
 class Student {
 	char *_name;
+	long _ID;
 public:
-	long ID;
 	short credits;
 	Student();
 	Student(int, char *);
@@ -29,6 +29,8 @@ public:
 	void display_info();
 	void name(char *s); // MUTATOR
 	char *name();       // ACCESSOR
+	void ID(long);
+	long ID();
 	char *info();
 	long info(char);
 } ; 
@@ -37,7 +39,7 @@ public:
 Student::Student ()
 {
  int i;
-	ID=0;
+	_ID=0;
 	_name=NULL;
 	credits=0;
 	for (i=0 ; i<8 ; i++)
@@ -48,7 +50,7 @@ Student::Student ()
 // Overloaded constructor
 Student::Student(int _id,char *s)
 { int i;
-	ID=_id;
+	_ID=_id;
 	_name=new char[strlen(s)+1];
 	strcpy(_name,s);
 	credits=0;
@@ -59,7 +61,7 @@ Student::Student(int _id,char *s)
 }
 Student::Student(int _id,char *s,short cr)
 { int i;
-	ID=_id;
+	_ID=_id;
 	_name=new char[strlen(s)+1];
 	strcpy(_name,s);
 	credits=cr;
@@ -85,6 +87,12 @@ void Student::name(char *s)
 		delete _name;
 	_name=new char[strlen(s)+1];
 	strcpy(_name,s);
+}
+void Student::ID(long i)
+{  _ID=i;
+}
+long Student::ID()
+{	return _ID;
 }
 
 void demo()
@@ -122,7 +130,7 @@ char *Student::info()
 }
 long Student::info(char c)
 {
-	return ID;
+	return _ID;
 }
 
 int main()
@@ -132,6 +140,7 @@ int main()
  Student a;
  Student b(1234,"Alfred Newman") ;
 	cout << "Lesson1:  Encapsulation - Scope Resolution"<< endl ;
+	a.ID(333);
 	cout <<"Enter Student name : " ; getline(cin,w);	
 	a.name((char *) w.c_str());
  
