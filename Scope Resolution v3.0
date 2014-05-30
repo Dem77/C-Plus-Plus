@@ -8,8 +8,7 @@
 #include <cstdlib>
 using namespace std;
 
-#include <var.h>
-//#include "var.h"
+#include "var.h"
 
 struct Courses {
 	char ID[8] ;
@@ -23,15 +22,15 @@ public:
 	short credits;
 	Student();
 	Student(int, char *);
+	Student(int,char *,short );
 	~Student();
 	struct Courses crs[8];
 	int add_new_course(char course[],int credits);
 	void display_info();
-	void name(char *s);
-	char *name();
-/*	char *info();
+	void name(char *s); // MUTATOR
+	char *name();       // ACCESSOR
+	char *info();
 	long info(char);
-*/
 } ; 
 
 // Default constructor
@@ -58,16 +57,24 @@ Student::Student(int _id,char *s)
 		crs[i].credits=0;
 	}
 }
-
+Student::Student(int _id,char *s,short cr)
+{ int i;
+	ID=_id;
+	_name=new char[strlen(s)+1];
+	strcpy(_name,s);
+	credits=cr;
+	for (i=0 ; i<8 ; i++)
+	{	crs[i].ID[0]='\0';
+		crs[i].credits=0;
+	}
+}
 Student::~Student()
 {
 	if (_name)
 	{	delete _name;
 		_name=NULL;
 	}
-
 }
-
 
 char * Student::name()
 { return _name;
@@ -108,7 +115,7 @@ void Student::display_info ()
 void Courses::display_info ()
 {	cout << "\tCourse ID: " << ID << "  Credits: " << credits << endl ;
 }
-/*
+
 char *Student::info()
 {
 	return _name;
@@ -117,18 +124,16 @@ long Student::info(char c)
 {
 	return ID;
 }
-*/
+
 int main()
 {  int i=0;
-   std::string w;
-   char z[200];
+   string w;
 
  Student a;
- // Student b(1234,"Alfred Newman") ;
+ Student b(1234,"Alfred Newman") ;
 	cout << "Lesson1:  Encapsulation - Scope Resolution"<< endl ;
-	cout <<"Enter Student name : " ; cin >> z; // getline(cin,w);	
-	a.name(z);
-//	a.name((char *) w.c_str());
+	cout <<"Enter Student name : " ; getline(cin,w);	
+	a.name((char *) w.c_str());
  
 //	if (a._name[0]=='\0')  // if the name is empty
 //		return;
@@ -136,11 +141,11 @@ int main()
 
 	a.add_new_course("CS 3397",2);
 	a.add_new_course("CS 2410",3);
-	//a.display_info();
-//	cout << a.info() << " ID=" << a.info('x');
+	a.display_info();
+	cout << a.info() << " ID=" << a.info('x');
 	for (i=0 ; i<8 && a.crs[i].ID[0]; i++ )
 		a.crs[i].display_info();
-//	b.display_info();
+	b.display_info();
 
 	return 0;
 }
